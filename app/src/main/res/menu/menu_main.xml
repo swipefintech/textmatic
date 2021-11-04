@@ -4,9 +4,9 @@
     tools:context="com.getswipe.textmatic.MainActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_source"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_source"
         app:showAsAction="never" />
 
 </menu>

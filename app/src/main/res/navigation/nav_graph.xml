@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/ForwardingRulesListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.getswipe.textmatic.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/ForwardingRulesListFragment"
+        android:name="com.getswipe.textmatic.ui.ForwardingRulesListFragment"
+        android:label="@string/fragment_rules_list_fragment_label"
+        tools:layout="@layout/fragment_forwarding_rules_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_RulesList_to_Rule"
+            app:destination="@id/ForwardingRuleFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.getswipe.textmatic.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/ForwardingRuleFragment"
+        android:name="com.getswipe.textmatic.ui.ForwardingRuleFragment"
+        android:label="@string/fragment_rule_fragment_label"
+        tools:layout="@layout/fragment_forwarding_rule">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_Rule_to_RulesList"
+            app:destination="@id/ForwardingRulesListFragment" />
 
     </fragment>
 
