@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.getswipe.textmatic.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,12 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.fab.setOnClickListener {
-            navController.navigate(R.id.action_RulesList_to_Rule)
-        }
+        setupNavigation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,6 +53,18 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SourceCodeLink))
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         ContextCompat.startActivity(applicationContext, intent, null)
+    }
+
+    private fun setupNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.action_RulesList_to_New_Rule)
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.fab.isVisible = destination.id != R.id.ForwardingRuleFragment
+        }
     }
 
     companion object {

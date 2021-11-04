@@ -8,11 +8,13 @@ import com.vaibhavpandey.katora.contracts.Provider
 class ForwardingRuleDatabaseProvider : Provider {
 
     override fun provide(container: MutableContainer) {
-        container.factory(ForwardingRuleDatabase::class.java) {
+        container.singleton(ForwardingRuleDatabase::class.java) {
             Room.databaseBuilder(
-                it.get(Context::class.java),
+                it[Context::class.java],
                 ForwardingRuleDatabase::class.java, "forwarding-rules"
-            ).build()
+            )
+                .allowMainThreadQueries()
+                .build()
         }
     }
 }

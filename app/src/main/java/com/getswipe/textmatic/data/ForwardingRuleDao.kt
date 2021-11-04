@@ -1,19 +1,26 @@
 package com.getswipe.textmatic.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface ForwardingRuleDao {
 
-    @Query("SELECT * FROM forwarding_rules")
-    fun getAll(): List<ForwardingRule>
+    @Delete
+    fun delete(forwardingRule: ForwardingRule)
+
+    @Query("DELETE FROM forwarding_rules")
+    fun deleteAll()
+
+    @Query("SELECT * FROM forwarding_rules WHERE _id = :id LIMIT 1")
+    fun get(id: Int): ForwardingRule
+
+    @Query("SELECT * FROM forwarding_rules ORDER BY name ASC")
+    fun getAll(): LiveData<List<ForwardingRule>>
 
     @Insert
     fun insertAll(vararg forwardingRules: ForwardingRule)
 
-    @Delete
-    fun delete(user: ForwardingRule)
+    @Update
+    fun update(forwardingRule: ForwardingRule)
 }

@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "forwarding_rules")
 data class ForwardingRule(
 
-    @PrimaryKey val uid: Int,
-
-    @ColumnInfo(name = "match_pattern") val matchPattern: String?,
-
-    @ColumnInfo(name = "webhook_url") val webhookUrl: String?
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "direction") var direction: String,
+    @ColumnInfo(name = "participant_pattern") var participantPattern: String?,
+    @ColumnInfo(name = "content_pattern") var contentPattern: String?,
+    @ColumnInfo(name = "webhook_url") var webhookUrl: String,
+    @ColumnInfo(name = "_id") @PrimaryKey var id: Int? = null,
 )

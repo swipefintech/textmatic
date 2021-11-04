@@ -4,22 +4,28 @@ import android.app.Application
 import com.getswipe.textmatic.data.ForwardingRuleDatabaseProvider
 import com.vaibhavpandey.katora.Container
 import com.vaibhavpandey.katora.contracts.ImmutableContainer
+import timber.log.Timber
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        _container = Container()
-        _container!!.install {
-            ForwardingRuleDatabaseProvider()
+        container = Container().apply {
+            install(MainProvider(this@MainApplication))
+            install(ForwardingRuleDatabaseProvider())
         }
     }
 
     companion object {
 
-        @Suppress("ObjectPropertyName")
-        private var _container: Container? = null
+        private var container: Container? = null
 
-        val container: ImmutableContainer get() = _container!!
+        val CONTAINER: ImmutableContainer get() = container!!
+
+        init {
+            if (BuildConfig.DEBUG) {
+                Timber.plant(Timber.DebugTree())
+            }
+        }
     }
 }

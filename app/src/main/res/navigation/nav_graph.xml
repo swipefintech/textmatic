@@ -12,8 +12,18 @@
         tools:layout="@layout/fragment_forwarding_rules_list">
 
         <action
-            android:id="@+id/action_RulesList_to_Rule"
+            android:id="@+id/action_RulesList_to_New_Rule"
             app:destination="@id/ForwardingRuleFragment" />
+
+        <action
+            android:id="@+id/action_RulesList_to_Existing_Rule"
+            app:destination="@id/ForwardingRuleFragment">
+
+            <argument
+                android:name="forwarding_rule_id"
+                app:argType="integer" />
+
+        </action>
 
     </fragment>
 
