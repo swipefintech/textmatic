@@ -23,11 +23,11 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build the app
         env:
-          SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE }}
+          SIGNING_KEYSTORE: release.jks
           SIGNING_KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-        run: ./gradlew --no-daemon app:assembleRelease
+        run: ./gradlew assembleRelease
       - name: Publish release assets
         uses: softprops/action-gh-release@v1
         with:

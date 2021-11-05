@@ -18,7 +18,7 @@ jobs:
       - name: Ensure gradlew has +x
         run: chmod +x ./gradlew
       - name: Build the app
-        run: ./gradlew --no-daemon app:assembleDebug
+        run: ./gradlew assembleDebug
       - name: Publish build output
         uses: actions/upload-artifact@v2
         with:
