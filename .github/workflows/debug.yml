@@ -22,5 +22,5 @@ jobs:
       - name: Publish build output
         uses: actions/upload-artifact@v2
         with:
-          name: Build Artifacts
+          name: Debug app
           path: app/build/outputs/apk/debug/app-debug.apk
