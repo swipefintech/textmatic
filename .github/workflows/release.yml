@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the app
         env:
-          ENCRYPTION_KEY: ${{ sections.ENCRYPTION_KEY }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
         run: gpg --quiet --batch --yes --decrypt --passphrase=$ENCRYPTION_KEY --output=release.jks release.jks.gpg
       - name: Set up JDK 11
         uses: actions/setup-java@v2
@@ -23,10 +23,10 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build the app
         env:
-          SIGNING_KEYSTORE: ${{ sections.SIGNING_KEYSTORE }}
-          SIGNING_KEYSTORE_PASSWORD: ${{ sections.SIGNING_KEYSTORE_PASSWORD }}
-          SIGNING_KEY: ${{ sections.SIGNING_KEY }}
-          SIGNING_KEY_PASSWORD: ${{ sections.SIGNING_KEY_PASSWORD }}
+          SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE }}
+          SIGNING_KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: ./gradlew --no-daemon app:assembleRelease
       - name: Publish release assets
         uses: softprops/action-gh-release@v1
