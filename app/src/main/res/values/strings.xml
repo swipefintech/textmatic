@@ -4,6 +4,9 @@
     <string name="action_undo">Undo</string>
     <string name="fragment_rules_list_fragment_label">Rules</string>
     <string name="fragment_rule_fragment_label">Rule</string>
+    <string name="notification_channel_label">Default</string>
+    <string name="notification_service_title">Checking for messages</string>
+    <string name="notification_service_content">Processing new text message as per set rules</string>
     <string name="rule_created_message" formatted="false">New forwarding rule named %s has been created.</string>
     <string name="rule_deleted_message" formatted="false">Forwarding rule named %s has been deleted.</string>
     <string name="rule_name_error_required">Please enter a rule name.</string>
@@ -23,9 +26,11 @@
         This will be matched against message content.
         You can provide plain text or RegExp here.
     </string>
+    <string name="rule_regexp_error_invalid">Please enter a valid RegExp.</string>
     <string name="rule_webhook_url_hint">Webhook URL</string>
     <string name="rule_webhook_url_label">Webhook:</string>
     <string name="rule_webhook_url_error_required">Please enter a URL.</string>
     <string name="rule_webhook_url_error_invalid">Please enter a valid URL.</string>
     <string name="save_label">Save</string>
+    <string name="sms_permission_rationale">Need SMS permission to read and process content.</string>
 </resources>

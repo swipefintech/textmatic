@@ -16,7 +16,10 @@ interface ForwardingRuleDao {
     fun get(id: Int): ForwardingRule
 
     @Query("SELECT * FROM forwarding_rules ORDER BY name ASC")
-    fun getAll(): LiveData<List<ForwardingRule>>
+    fun getAll(): List<ForwardingRule>
+
+    @Query("SELECT * FROM forwarding_rules ORDER BY name ASC")
+    fun getAllAsLiveData(): LiveData<List<ForwardingRule>>
 
     @Insert
     fun insertAll(vararg forwardingRules: ForwardingRule)

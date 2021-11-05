@@ -1,5 +1,6 @@
 package com.getswipe.textmatic
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,9 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.getswipe.textmatic.databinding.ActivityMainBinding
+import com.getswipe.textmatic.spy.TextMessageService
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +29,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        setupNavigation()
+        setUpNavigation()
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_SMS)) {
+            startService()
+        } else {
+            EasyPermissions.requestPermissions(this,
+                getString(R.string.sms_permission_rationale), REQUEST_CODE_SMS_PERMISSION,
+                Manifest.permission.READ_SMS);
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,6 +54,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
@@ -50,25 +70,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openLinkToSourceCode() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SourceCodeLink))
+        val intent = Intent(Intent.ACTION_VIEW, SOURCE_CODE_LINK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         ContextCompat.startActivity(applicationContext, intent, null)
     }
 
-    private fun setupNavigation() {
+    private fun setUpNavigation() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.fab.setOnClickListener {
             navController.navigate(R.id.action_RulesList_to_New_Rule)
         }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.fab.isVisible = destination.id != R.id.ForwardingRuleFragment
         }
     }
 
+    @AfterPermissionGranted(REQUEST_CODE_SMS_PERMISSION)
+    private fun startService() {
+        TextMessageService.startSelf(applicationContext)
+    }
+
     companion object {
 
-        const val SourceCodeLink = "https://github.com/swipefintech/textmatic"
+        private const val REQUEST_CODE_SMS_PERMISSION = 60600
+        private val SOURCE_CODE_LINK = Uri.parse("https://github.com/swipefintech/textmatic")
     }
 }

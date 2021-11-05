@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.getswipe.textmatic.MainApplication
@@ -14,8 +12,11 @@ import com.getswipe.textmatic.R
 import com.getswipe.textmatic.data.ForwardingRule
 import com.getswipe.textmatic.data.ForwardingRuleDatabase
 import com.getswipe.textmatic.databinding.FragmentForwardingRuleBinding
+import com.getswipe.textmatic.spy.TextMessageService
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
+import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 
 class ForwardingRuleFragment : Fragment() {
 
@@ -87,8 +88,9 @@ class ForwardingRuleFragment : Fragment() {
             rule
         }
 
-        Snackbar.make(requireView(), getString(R.string.rule_deleted_message, rule.name), Snackbar.LENGTH_LONG)
+        Snackbar.make(requireView(), getString(R.string.rule_created_message, rule.name), Snackbar.LENGTH_LONG)
             .show()
+        TextMessageService.startSelf(requireContext())
         findNavController().popBackStack()
     }
 
@@ -105,6 +107,42 @@ class ForwardingRuleFragment : Fragment() {
             ok = false
         } else {
             binding.nameField.error = null
+        }
+
+        val participantPattern = viewModel.participantPattern.value
+        if (!participantPattern.isNullOrEmpty()) {
+            try {
+                Pattern.compile(participantPattern)
+                binding.participantPatternField.error = null
+            } catch (ignore: PatternSyntaxException) {
+                binding.participantPatternField.error = getString(R.string.rule_regexp_error_invalid)
+                if (ok) {
+                    binding.participantPatternField.requestFocus()
+                }
+
+                ok = false
+            }
+
+        } else {
+            binding.participantPatternField.error = null
+        }
+
+        val contentPattern = viewModel.contentPattern.value
+        if (!contentPattern.isNullOrEmpty()) {
+            try {
+                Pattern.compile(contentPattern)
+                binding.contentPatternField.error = null
+            } catch (ignore: PatternSyntaxException) {
+                binding.contentPatternField.error = getString(R.string.rule_regexp_error_invalid)
+                if (ok) {
+                    binding.contentPatternField.requestFocus()
+                }
+
+                ok = false
+            }
+
+        } else {
+            binding.contentPatternField.error = null
         }
 
         val webhookUrl = viewModel.webhookUrl.value

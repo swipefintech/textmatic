@@ -8,5 +8,5 @@ class ForwardingRulesListViewModel : ViewModel() {
 
     val forwardingRules = MainApplication.CONTAINER[ForwardingRuleDatabase::class.java]
         .forwardingRuleDao()
-        .getAll()
+        .getAllAsLiveData()
 }
