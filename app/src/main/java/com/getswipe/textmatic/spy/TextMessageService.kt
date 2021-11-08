@@ -65,7 +65,7 @@ class TextMessageService : Service() {
 
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
-                PendingIntent.getActivity(this, 0, notificationIntent, 0)
+                PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE)
             }
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
