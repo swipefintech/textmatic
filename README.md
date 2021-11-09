@@ -22,12 +22,15 @@ You can use services like [Pipedream](https://pipedream.com/) to process these p
 
 ```js
 async (event, steps) => {
+  const color = event.body.direction === "incoming" ? "#0099e5" : "#34bf49";
   const icon = event.body.direction === "incoming" ? ":inbox_tray:" : ":outbox_tray:";
   return require('axios')
     .post('https://hooks.slack.com/services/<your-webhook-url>', {
       text: `New ${event.body.direction} ${icon} message captured.`,
-      attachments: [{
+        attachments: [{
         author_name: event.body.participant,
+        color,
+        footer: 'Textmatic',
         text: event.body.content,
         ts: event.body.date / 1000,
       }],
