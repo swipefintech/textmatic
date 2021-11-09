@@ -3,11 +3,16 @@
 If you ever wanted a tool to simply push the SMS (or text messages) from your phone to somewhere remote, this is it.
 This app matches all incoming and/or outgoing text messages against set rules and sends them over to webhook that you define.
 
+[![Build](https://github.com/swipefintech/textmatic/actions/workflows/debug.yml/badge.svg)](https://github.com/swipefintech/textmatic/actions/workflows/debug.yml)
+[![Release](https://badgen.net/github/release/swipefintech/textmatic)](https://github.com/swipefintech/textmatic/releases)
+[![Downloads](https://badgen.net/github/assets-dl/swipefintech/textmatic)](https://github.com/swipefintech/textmatic/releases/latest)
+[![License](https://badgen.net/github/license/swipefintech/textmatic)](https://github.com/swipefintech/textmatic/blob/main/LICENSE)
+
 If you find this app useful, send over your hugs :hugs: to [Float](https://float.africa/).
 
 ### Usage
 
-The app sends payload similar to below to the remote webhook:
+The app sends tiny payload similar to what's shown below on the remote webhook (as [JSON](https://www.json.org/) body in a `POST` request):
 
 ```json
 {
@@ -18,7 +23,7 @@ The app sends payload similar to below to the remote webhook:
 }
 ```
 
-You can use services like [Pipedream](https://pipedream.com/) to process these payloads e.g., sending over to a Slack channel using below code:
+You can use services like [Pipedream](https://pipedream.com/) to process these payloads and do stuff e.g., sending over to a Slack channel using below code:
 
 ```js
 async (event, steps) => {
