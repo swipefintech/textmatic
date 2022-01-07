@@ -32,7 +32,7 @@ async (event, steps) => {
   return require('axios')
     .post('https://hooks.slack.com/services/<your-webhook-url>', {
       text: `New ${event.body.direction} ${icon} message captured.`,
-        attachments: [{
+      attachments: [{
         author_name: event.body.participant,
         color,
         footer: 'Textmatic',
